@@ -1,0 +1,22 @@
+<button id='get_session'>Get session</button>
+<br>
+<div>
+  Your session key is: <span id='session_key'></span>
+</div>
+
+<script>
+  var getSessionButton = document.querySelector("#get_session");
+  var sessionKey       = document.querySelector("#session_key");
+  var getSessionUrl    = "http://localhost:3000/sessions";
+
+  getSessionButton.addEventListener( "click", (e) =>
+    fetch(getSessionUrl, {
+      method: 'post'
+    }).then( (response) =>
+      response.json()
+    ).then( (sessionObject) => {
+      console.log(sessionObject)
+      sessionKey.innerHTML = sessionObject.session.value
+    })
+  )
+</script>
