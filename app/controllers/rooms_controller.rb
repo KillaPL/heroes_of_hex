@@ -2,7 +2,8 @@ class RoomsController < ApplicationController
   before_filter :authenticated
 
   def index
-
+    rooms = Room.all
+    render json: rooms
   end
 
   def create
@@ -21,5 +22,4 @@ class RoomsController < ApplicationController
   def room_params
     params.require(:room).permit(:name, :point_limit)
   end
-
 end

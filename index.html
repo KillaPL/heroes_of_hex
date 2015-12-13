@@ -87,3 +87,52 @@
 
   })
 </script>
+
+<br>
+<br>
+<br>
+
+<button id='get_all_rooms'>Get all rooms</button>
+<div>Rooms</div>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Point limit</th>
+      <th>Users</th>
+    </tr>
+  </thead>
+  <tbody id='rooms_table'>
+  </tbody>
+</table>
+
+<script>
+  var getAllRooms = document.querySelector("#get_all_rooms")
+  var roomsTable  = document.querySelector("#rooms_table")
+
+
+  getAllRooms.addEventListener('click', () => {
+    var getRoomsUrl = "http://localhost:3000/rooms?session_token=" + sessionKey.textContent;
+    fetch(getRoomsUrl).then( (response) =>
+      response.json()
+    ).then( (returnValue) => {
+      string = returnValue.rooms.map( (room) =>
+        "<tr><td>" + room.name + "</td><td>" + room.point_limit + "</td><td>" + room.sessions_count + "</td></tr>"
+      ).join("");
+      roomsTable.innerHTML = string;
+    })
+  })
+
+</script>
+
+
+<!--   getSessionButton.addEventListener( "click", (e) =>
+    fetch(getSessionUrl, {
+      method: 'post'
+    }).then( (response) =>
+      response.json()
+    ).then( (sessionObject) => {
+      sessionKey.innerHTML = sessionObject.session.value
+    })
+  )
+ -->
