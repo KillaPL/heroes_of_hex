@@ -1,4 +1,6 @@
 class Session < ActiveRecord::Base
+  belongs_to :room
+
   before_create do
     self.value = SecureRandom.hex(40)
   end

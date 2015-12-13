@@ -15,8 +15,75 @@
     }).then( (response) =>
       response.json()
     ).then( (sessionObject) => {
-      console.log(sessionObject)
       sessionKey.innerHTML = sessionObject.session.value
     })
   )
+</script>
+
+
+<br>
+<br>
+<div>
+  <div>
+    <label for='room_name'>Room name</label>
+    <input id='room_name' placeholder='room name'>
+  </div>
+  <div>
+    <label for='room_point_limit'>Room point limit</label>
+    <input id='room_point_limit' placeholder='5000'>
+  </div>
+  <button id='create_room'>Create room</button>
+</div>
+
+<div>
+  <div>Room creation status: <span id='room_create_status'></span></div>
+  <div>Room creation errors: <span id='room_create_errors'></span></div>
+</div>
+<script>
+  var createRoomButton = document.querySelector("#create_room");
+  var roomCreateStatus = document.querySelector('#room_create_status')
+  var roomCreateErrors = document.querySelector('#room_create_errors')
+  var roomName         = document.querySelector('#room_name')
+  var roomPointLimit   = document.querySelector('#room_point_limit')
+
+  var createRoomUrl    = "http://localhost:3000/rooms";
+
+  createRoomButton.addEventListener( "click", (e) => {
+    var body = JSON.stringify({
+      session_token: sessionKey.textContent,
+      room: {
+        name: roomName.value,
+        point_limit: roomPointLimit.value
+      }
+    })
+
+
+    fetch(createRoomUrl, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: body,
+    }).then( (response) => {
+      roomCreateStatus.innerHTML = response.status
+      if(response.status == 422) {
+        // console.log(response.json())
+        return response
+      } else {
+        return response
+      }
+    }).then( (response) => {
+      return response.json()
+    }).then( (returnValue) => {
+      if(returnValue.errors) {
+        string = "<ul>" + returnValue.errors.map( (err) => "<li>" + err + "</li>" ).join("") + "</ul>";
+        roomCreateErrors.innerHTML = string;
+      } else {
+        roomCreateErrors.innerHTML = '';
+        console.log(returnValue);
+      }
+    })
+
+  })
 </script>
