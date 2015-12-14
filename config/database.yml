@@ -27,5 +27,5 @@ production:
   adapter: postgresql
   encoding: utf8
   pool: 5
-  username: <%= ENV['APPNAME_DATABASE_USER'] %>
-  password: <%= ENV['APPNAME_DATABASE_PASSWORD'] %>
+  username: <%= ENV['HOH_DATABASE_USER'] %>
+  password: <%= ENV['HOH_DATABASE_PASSWORD'] %>
