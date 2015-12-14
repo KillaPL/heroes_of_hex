@@ -2,6 +2,7 @@ require 'dotenv'
 Dotenv.load
 
 # require 'pry'
+# binding.pry
 
 require 'active_record'
 

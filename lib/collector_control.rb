@@ -1,2 +1,4 @@
 require 'daemons'
-Daemons.run('garbage_data_collector.rb')
+# require 'pry'
+# binding.pry
+Daemons.run('lib/garbage_data_collector.rb')
