@@ -1,11 +1,7 @@
-puts "IM IN FILE"
-
 require 'dotenv'
 Dotenv.load
 
-require 'pry'
-
-binding.pry
+# require 'pry'
 
 require 'active_record'
 
@@ -45,7 +41,7 @@ Time.zone = 'Warsaw'
 puts "starting!"
 
 loop do
-  binding.pry
+  # binding.pry
   rooms_count    = Room.empty.count
   sessions_count = Session.dead.count
   Session.dead.destroy_all
