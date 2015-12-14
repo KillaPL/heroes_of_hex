@@ -9,6 +9,7 @@
 <br>
 <br>
 <div>
+  <button id='leave_room_button'>Leave room</button>
   <div>Joined room data</div>
   <div>Id: <span id='room_id'></span></div>
   <div>Name: <span id='room_name'></span></div>
@@ -29,6 +30,8 @@
   var roomUsersCount = document.querySelector("#room_users_present")
   var roomCommunicationToken = document.querySelector("#room_communication_token")
 
+  var leaveRoomButton = document.querySelector("#leave_room_button")
+
   function showCurrentRoomData(room) {
     console.log(room)
     if(room) {
@@ -37,6 +40,12 @@
       roomPointLimit.innerHTML         = room.point_limit;
       roomUsersCount.innerHTML         = room.sessions_count;
       roomCommunicationToken.innerHTML = room.communication_token
+    } else {
+      roomId.innerHTML                 = "";
+      roomName.innerHTML               = "";
+      roomPointLimit.innerHTML         = "";
+      roomUsersCount.innerHTML         = "";
+      roomCommunicationToken.innerHTML = "";
     }
   }
 
@@ -52,7 +61,7 @@
         sessionLastUpdatedAt.innerHTML = new Date();
         touchSession();
       })
-    , 1000)
+    , 15000)
   }
 
   getSessionButton.addEventListener( "click", (e) =>
@@ -65,6 +74,25 @@
       touchSession()
     })
   )
+
+  leaveRoomButton.addEventListener( "click", (e) => {
+    leaveRoomUrl = "http://localhost:3000/rooms/" + roomId.innerHTML + "/leave";
+    var body = JSON.stringify({
+      session_token: sessionKey.textContent
+    })
+
+    fetch(leaveRoomUrl, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: 'post',
+      body: body
+    }).then( (response) => {
+      showCurrentRoomData()
+    })
+
+  })
 </script>
 
 
@@ -127,6 +155,7 @@
         string = "<ul>" + returnValue.errors.map( (err) => "<li>" + err + "</li>" ).join("") + "</ul>";
         roomCreateErrors.innerHTML = string;
       } else {
+        showCurrentRoomData(returnValue.room);
         roomCreateErrors.innerHTML = '';
       }
     })
@@ -180,15 +209,3 @@
   })
 
 </script>
-
-
-<!--   getSessionButton.addEventListener( "click", (e) =>
-    fetch(getSessionUrl, {
-      method: 'post'
-    }).then( (response) =>
-      response.json()
-    ).then( (sessionObject) => {
-      sessionKey.innerHTML = sessionObject.session.value
-    })
-  )
- -->

@@ -15,9 +15,14 @@ class RoomsController < ApplicationController
     else
       render json: { errors: room.errors.full_messages }, status: 422
     end
-    # room = Room.create
-    # render json: room
   end
+
+  def leave
+    current_session.update(room_id: nil)
+    head :ok
+  end
+
+  private
 
   def room_params
     params.require(:room).permit(:name, :point_limit)
