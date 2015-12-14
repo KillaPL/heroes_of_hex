@@ -3,11 +3,27 @@
 <div>
   Your session key is: <span id='session_key'></span>
 </div>
+<div>
+  Session last updated at: <span id='session_last_updated_at'></span>
+</div>
 
 <script>
-  var getSessionButton = document.querySelector("#get_session");
-  var sessionKey       = document.querySelector("#session_key");
-  var getSessionUrl    = "http://localhost:3000/sessions";
+  var getSessionButton     = document.querySelector("#get_session");
+  var sessionKey           = document.querySelector("#session_key");
+  var sessionLastUpdatedAt = document.querySelector("#session_last_updated_at")
+  var getSessionUrl        = "http://localhost:3000/sessions";
+
+  function touchSession() {
+    url = getSessionUrl + "/" + sessionKey.textContent
+    setTimeout( () =>
+      fetch(url, {
+        method: "put"
+      }).then( (response) => {
+        sessionLastUpdatedAt.innerHTML = new Date();
+        touchSession();
+      })
+    , 15000)
+  }
 
   getSessionButton.addEventListener( "click", (e) =>
     fetch(getSessionUrl, {
@@ -16,6 +32,7 @@
       response.json()
     ).then( (sessionObject) => {
       sessionKey.innerHTML = sessionObject.session.value
+      touchSession()
     })
   )
 </script>

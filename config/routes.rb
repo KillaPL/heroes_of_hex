@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :sessions, only: [:create]
+  resources :sessions, only: [:create, :update]
 
   resources :rooms, only: [:create, :index]
 
