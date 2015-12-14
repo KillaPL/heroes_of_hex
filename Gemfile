@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
 ruby '2.2.0'
 
+gem 'dotenv-rails'
 gem 'rails', '4.2.2'
 gem 'pg'
 gem 'active_model_serializers'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'puma'
 gem 'foreman'
-
 
 group :development do
   gem 'pry'
