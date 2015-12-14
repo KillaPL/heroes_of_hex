@@ -9,14 +9,11 @@ require_relative "./../app/models/room"
 
 environment = nil
 
-if ENV['SECRET_KEY_BASE']
+if ENV["HOME"] == "/home/deploy"
   environment = 'production'
 else
   environment = 'development'
 end
-
-
-binding.pry
 
 db_config       = YAML::load(File.open('config/database.yml'))[environment]
 db_config['pool'] = 1
