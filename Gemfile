@@ -1,14 +1,11 @@
 source 'https://rubygems.org'
+ruby '2.2.2'
 
 gem 'rails', '4.2.2'
 gem 'pg'
 gem 'active_model_serializers'
 gem 'rack-cors', :require => 'rack/cors'
-
-
-group :production do
-  gem 'puma'
-end
+gem 'puma'
 
 group :development do
   gem 'pry'
