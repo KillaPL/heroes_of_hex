@@ -20,6 +20,9 @@ end
 
 db_config       = YAML::load(File.open('config/database.yml'))[environment]
 db_config['pool'] = 1
+
+binding.pry
+
 ActiveRecord::Base.establish_connection(db_config)
 
 Time.zone = 'Warsaw'
