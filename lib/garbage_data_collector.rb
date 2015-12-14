@@ -1,3 +1,5 @@
+puts "IM IN FILE"
+
 require 'dotenv'
 Dotenv.load
 
