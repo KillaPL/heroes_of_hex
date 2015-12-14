@@ -22,6 +22,16 @@ class RoomsController < ApplicationController
     head :ok
   end
 
+  def join
+    room = Room.find_by(id: params[:room_id])
+    if room.nil?
+      head 404
+    else
+      current_session.update(room_id: room.id)
+      render json: room
+    end
+  end
+
   private
 
   def room_params

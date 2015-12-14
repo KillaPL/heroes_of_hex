@@ -178,6 +178,7 @@
       <th>Name</th>
       <th>Point limit</th>
       <th>Users</th>
+      <th></th>
     </tr>
   </thead>
   <tbody id='rooms_table'>
@@ -189,19 +190,47 @@
   var roomsTable         = document.querySelector("#rooms_table")
   var lastRoomsRequestAt = document.querySelector("#last_rooms_request_at")
 
+  roomsTable.addEventListener("click", (e) => {
+    if(e.target.classList.contains("join_room")) {
+      var roomId = e.target.dataset.roomId;
+      var joinRoomUrl = "http://localhost:3000/rooms/" + roomId + "/join";
+      var body = JSON.stringify({
+        session_token: sessionKey.textContent
+      })
+
+      fetch(joinRoomUrl, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'post',
+        body: body
+      }).then( (response) =>
+        response.json()
+      ).then( (response) => {
+        showCurrentRoomData(response.room)
+      })
+    }
+  })
+
+
   function fetchRooms(){
     var getRoomsUrl = "http://localhost:3000/rooms?session_token=" + sessionKey.textContent;
     fetch(getRoomsUrl).then( (response) =>
       response.json()
     ).then( (returnValue) => {
       string = returnValue.rooms.map( (room) =>
-        "<tr><td>" + room.name + "</td><td>" + room.point_limit + "</td><td>" + room.sessions_count + "</td></tr>"
+        "<tr><td>"  + room.name +
+        "</td><td>" + room.point_limit +
+        "</td><td>" + room.sessions_count +
+        "</td><td><button class='join_room' data-room-id=" + room.id + ">Join</button>" +
+        "</td></tr>"
       ).join("");
       roomsTable.innerHTML = string;
       lastRoomsRequestAt.innerHTML = new Date();
     })
 
-    setTimeout(fetchRooms, 1000)
+    setTimeout(fetchRooms, 5000)
   }
 
   getAllRooms.addEventListener('click', () => {
