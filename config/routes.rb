@@ -6,5 +6,5 @@ Rails.application.routes.draw do
     post :join
   end
 
-  match "/rooms" => "application#index", via: :options
+  root to: "welcome#index"
 end

@@ -19,10 +19,13 @@
 </div>
 
 <script>
+  // var host = "http://localhost:3000"
+  var host = "http://46.101.177.226"
+
   var getSessionButton     = document.querySelector("#get_session");
   var sessionKey           = document.querySelector("#session_key");
   var sessionLastUpdatedAt = document.querySelector("#session_last_updated_at")
-  var getSessionUrl        = "http://localhost:3000/sessions";
+  var getSessionUrl        = host + "/sessions";
 
   var roomId = document.querySelector("#room_id")
   var roomName = document.querySelector("#room_name")
@@ -76,7 +79,7 @@
   )
 
   leaveRoomButton.addEventListener( "click", (e) => {
-    leaveRoomUrl = "http://localhost:3000/rooms/" + roomId.innerHTML + "/leave";
+    leaveRoomUrl = host + "/rooms/" + roomId.innerHTML + "/leave";
     var body = JSON.stringify({
       session_token: sessionKey.textContent
     })
@@ -121,7 +124,7 @@
   var createRoomName       = document.querySelector('#create_room_name')
   var createRoomPointLimit = document.querySelector('#create_room_point_limit')
 
-  var createRoomUrl    = "http://localhost:3000/rooms";
+  var createRoomUrl = host + "/rooms";
 
   createRoomButton.addEventListener( "click", (e) => {
     var body = JSON.stringify({
@@ -193,7 +196,7 @@
   roomsTable.addEventListener("click", (e) => {
     if(e.target.classList.contains("join_room")) {
       var roomId = e.target.dataset.roomId;
-      var joinRoomUrl = "http://localhost:3000/rooms/" + roomId + "/join";
+      var joinRoomUrl = host + "/rooms/" + roomId + "/join";
       var body = JSON.stringify({
         session_token: sessionKey.textContent
       })
@@ -215,7 +218,7 @@
 
 
   function fetchRooms(){
-    var getRoomsUrl = "http://localhost:3000/rooms?session_token=" + sessionKey.textContent;
+    var getRoomsUrl = host + "/rooms?session_token=" + sessionKey.textContent;
     fetch(getRoomsUrl).then( (response) =>
       response.json()
     ).then( (returnValue) => {
