@@ -1,4 +1,5 @@
 # This file is used by Rack-based servers to start the application.
+require ::File.expand_path('../config/environment', __FILE__)
 
 use Rack::Cors do
   allow do
@@ -7,5 +8,4 @@ use Rack::Cors do
   end
 end
 
-require ::File.expand_path('../config/environment', __FILE__)
 run Rails.application
