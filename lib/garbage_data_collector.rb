@@ -7,7 +7,16 @@ require 'active_support/core_ext/time/zones'
 require_relative "./../app/models/session"
 require_relative "./../app/models/room"
 
-environment = 'development'
+environment = nil
+
+if ENV['SECRET_KEY_BASE']
+  environment = 'production'
+else
+  environment = 'development'
+end
+
+
+binding.pry
 
 db_config       = YAML::load(File.open('config/database.yml'))[environment]
 db_config['pool'] = 1
