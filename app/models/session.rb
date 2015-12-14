@@ -5,7 +5,9 @@ class Session < ActiveRecord::Base
     self.value = SecureRandom.hex(40)
   end
 
-  def alive?
-    created_at + 6.hours > Time.now
+  scope :dead, ->{ where("alive_until < ?", Time.zone.now) }
+
+  def mark_as_alive!
+    update(alive_until: Time.now + 20.seconds)
   end
 end
