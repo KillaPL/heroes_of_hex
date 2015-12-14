@@ -92,7 +92,10 @@
 <br>
 <br>
 
-<button id='get_all_rooms'>Get all rooms</button>
+<button id='get_all_rooms'>Start polling rooms</button>
+<div>
+  Last rooms request at: <span id='last_rooms_request_at'></span>
+</div>
 <div>Rooms</div>
 <table>
   <thead>
@@ -107,11 +110,11 @@
 </table>
 
 <script>
-  var getAllRooms = document.querySelector("#get_all_rooms")
-  var roomsTable  = document.querySelector("#rooms_table")
+  var getAllRooms        = document.querySelector("#get_all_rooms")
+  var roomsTable         = document.querySelector("#rooms_table")
+  var lastRoomsRequestAt = document.querySelector("#last_rooms_request_at")
 
-
-  getAllRooms.addEventListener('click', () => {
+  function fetchRooms(){
     var getRoomsUrl = "http://localhost:3000/rooms?session_token=" + sessionKey.textContent;
     fetch(getRoomsUrl).then( (response) =>
       response.json()
@@ -120,7 +123,14 @@
         "<tr><td>" + room.name + "</td><td>" + room.point_limit + "</td><td>" + room.sessions_count + "</td></tr>"
       ).join("");
       roomsTable.innerHTML = string;
+      lastRoomsRequestAt.innerHTML = new Date();
     })
+
+    setTimeout(fetchRooms, 1000)
+  }
+
+  getAllRooms.addEventListener('click', () => {
+    fetchRooms()
   })
 
 </script>
