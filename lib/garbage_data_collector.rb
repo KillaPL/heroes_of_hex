@@ -3,6 +3,8 @@ Dotenv.load
 
 require 'pry'
 
+binding.pry
+
 require 'active_record'
 
 require 'active_support/values/time_zone'
@@ -41,6 +43,7 @@ Time.zone = 'Warsaw'
 puts "starting!"
 
 loop do
+  binding.pry
   rooms_count    = Room.empty.count
   sessions_count = Session.dead.count
   Session.dead.destroy_all
