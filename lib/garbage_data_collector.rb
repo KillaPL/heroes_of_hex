@@ -20,8 +20,19 @@ end
 
 db_config       = YAML::load(File.open('config/database.yml'))[environment]
 db_config['pool'] = 1
+db_config['username'] = ENV['HOH_DATABASE_USER']
+db_config["password"] = ENV['HOH_DATABASE_PASSWORD']
 
-binding.pry
+# => {"adapter"=>"postgresql",
+#  "pool"=>1,
+#  "timeout"=>5000,
+#  "database"=>"hoh_production",
+#  "host"=>"localhost",
+#  "encoding"=>"utf8",
+#  "username"=>"<%= ENV['HOH_DATABASE_USER'] %>",
+#  "password"=>"<%= ENV['HOH_DATABASE_PASSWORD'] %>"}
+
+# binding.pry
 
 ActiveRecord::Base.establish_connection(db_config)
 
