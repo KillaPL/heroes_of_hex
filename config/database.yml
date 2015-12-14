@@ -23,3 +23,9 @@ test:
 production:
   <<: *default
   database: hoh_production
+  host: localhost
+  adapter: postgresql
+  encoding: utf8
+  pool: 5
+  username: <%= ENV['APPNAME_DATABASE_USER'] %>
+  password: <%= ENV['APPNAME_DATABASE_PASSWORD'] %>
