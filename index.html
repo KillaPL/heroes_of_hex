@@ -6,6 +6,16 @@
 <div>
   Session last updated at: <span id='session_last_updated_at'></span>
 </div>
+<br>
+<br>
+<div>
+  <div>Joined room data</div>
+  <div>Id: <span id='room_id'></span></div>
+  <div>Name: <span id='room_name'></span></div>
+  <div>Point Limit: <span id='room_point_limit'></span></div>
+  <div>Users present: <span id='room_users_present'></span></div>
+  <div>Server communication token: <span id='room_communication_token'></span></div>
+</div>
 
 <script>
   var getSessionButton     = document.querySelector("#get_session");
@@ -13,16 +23,36 @@
   var sessionLastUpdatedAt = document.querySelector("#session_last_updated_at")
   var getSessionUrl        = "http://localhost:3000/sessions";
 
+  var roomId = document.querySelector("#room_id")
+  var roomName = document.querySelector("#room_name")
+  var roomPointLimit = document.querySelector("#room_point_limit")
+  var roomUsersCount = document.querySelector("#room_users_present")
+  var roomCommunicationToken = document.querySelector("#room_communication_token")
+
+  function showCurrentRoomData(room) {
+    console.log(room)
+    if(room) {
+      roomId.innerHTML                 = room.id;
+      roomName.innerHTML               = room.name;
+      roomPointLimit.innerHTML         = room.point_limit;
+      roomUsersCount.innerHTML         = room.sessions_count;
+      roomCommunicationToken.innerHTML = room.communication_token
+    }
+  }
+
   function touchSession() {
     url = getSessionUrl + "/" + sessionKey.textContent
     setTimeout( () =>
       fetch(url, {
         method: "put"
-      }).then( (response) => {
+      }).then( (response) =>
+        response.json()
+      ).then( (response) => {
+        showCurrentRoomData(response.session.room)
         sessionLastUpdatedAt.innerHTML = new Date();
         touchSession();
       })
-    , 15000)
+    , 1000)
   }
 
   getSessionButton.addEventListener( "click", (e) =>
@@ -42,12 +72,12 @@
 <br>
 <div>
   <div>
-    <label for='room_name'>Room name</label>
-    <input id='room_name' placeholder='room name'>
+    <label for='create_room_name'>Room name</label>
+    <input id='create_room_name' placeholder='room name'>
   </div>
   <div>
-    <label for='room_point_limit'>Room point limit</label>
-    <input id='room_point_limit' placeholder='5000'>
+    <label for='create_room_point_limit'>Room point limit</label>
+    <input id='create_room_point_limit' placeholder='5000'>
   </div>
   <button id='create_room'>Create room</button>
 </div>
@@ -57,11 +87,11 @@
   <div>Room creation errors: <span id='room_create_errors'></span></div>
 </div>
 <script>
-  var createRoomButton = document.querySelector("#create_room");
-  var roomCreateStatus = document.querySelector('#room_create_status')
-  var roomCreateErrors = document.querySelector('#room_create_errors')
-  var roomName         = document.querySelector('#room_name')
-  var roomPointLimit   = document.querySelector('#room_point_limit')
+  var createRoomButton     = document.querySelector("#create_room");
+  var roomCreateStatus     = document.querySelector('#room_create_status')
+  var roomCreateErrors     = document.querySelector('#room_create_errors')
+  var createRoomName       = document.querySelector('#create_room_name')
+  var createRoomPointLimit = document.querySelector('#create_room_point_limit')
 
   var createRoomUrl    = "http://localhost:3000/rooms";
 
@@ -69,8 +99,8 @@
     var body = JSON.stringify({
       session_token: sessionKey.textContent,
       room: {
-        name: roomName.value,
-        point_limit: roomPointLimit.value
+        name: createRoomName.value,
+        point_limit: createRoomPointLimit.value
       }
     })
 
@@ -98,7 +128,6 @@
         roomCreateErrors.innerHTML = string;
       } else {
         roomCreateErrors.innerHTML = '';
-        console.log(returnValue);
       }
     })
 

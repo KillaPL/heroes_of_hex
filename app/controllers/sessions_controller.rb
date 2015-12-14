@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
     session = Session.find_by(value: params[:id])
     if session
       session.mark_as_alive!
-      head :ok
+      render json: session
     else
       head 404
     end
