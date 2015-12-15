@@ -4,7 +4,7 @@
   Your session key is: <span id='session_key'></span>
 </div>
 <div>
-  Session last updated at: <span id='session_last_updated_at'></span>
+  Session alive until: <span id='session_alive_until'></span>
 </div>
 <br>
 <br>
@@ -22,10 +22,10 @@
   // var host = "http://localhost:3000"
   var host = "http://46.101.177.226"
 
-  var getSessionButton     = document.querySelector("#get_session");
-  var sessionKey           = document.querySelector("#session_key");
-  var sessionLastUpdatedAt = document.querySelector("#session_last_updated_at")
-  var getSessionUrl        = host + "/sessions";
+  var getSessionButton  = document.querySelector("#get_session");
+  var sessionKey        = document.querySelector("#session_key");
+  var sessionAliveUntil = document.querySelector("#session_alive_until")
+  var getSessionUrl     = host + "/sessions";
 
   var roomId = document.querySelector("#room_id")
   var roomName = document.querySelector("#room_name")
@@ -61,7 +61,7 @@
         response.json()
       ).then( (response) => {
         showCurrentRoomData(response.session.room)
-        sessionLastUpdatedAt.innerHTML = new Date();
+        sessionAliveUntil.innerHTML = response.session.alive_until;
         touchSession();
       })
     , 15000)

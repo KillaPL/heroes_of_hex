@@ -1,4 +1,4 @@
 class SessionSerializer < ActiveModel::Serializer
-  attributes :value
+  attributes :value, :alive_until
   has_one :room
 end
