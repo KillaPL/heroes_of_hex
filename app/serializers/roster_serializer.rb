@@ -6,6 +6,7 @@ class RosterSerializer
   def to_hash
     {
       id: @roster.id,
+      user_id: @roster.user_id,
       points_limit: @roster.points_limit,
       name: @roster.name,
       troops: @roster.troops.map {|troop| {unit_size: troop.unit_size, total_price: troop.total_price, 

@@ -1,21 +1,26 @@
 class RostersController < ApplicationController
+before_action :authenticate_user!, except: [:update]
+  
   def index
-    @rosters = Roster.all
+    @rosters = Roster.where(user_id:current_user.id)
   end
 
 def show
    @roster = Roster.includes(:troops).find(params[:id])
+   @roster.user_id = current_user.id  
    @roster_json = RosterSerializer.new(@roster).to_hash.to_json
    @units = Unit.where(army_id: @roster.army_id)
 end
 
 def new
     @roster = Roster.new
+   @roster.user_id = current_user.id  
     @army_options = Army.all.map{|u| [ u.name, u.id ] }    
 end
 
   def create
-    @roster = Roster.new(roster_params)
+    @roster = Roster.new(roster_params) 
+   @roster.user_id = current_user.id  
     if @roster.valid?
       @roster.save
       redirect_to :action => 'show', :id => @roster.id
