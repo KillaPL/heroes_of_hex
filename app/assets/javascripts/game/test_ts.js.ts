@@ -7,4 +7,4 @@ class Greeter {
 
 var greeter = new Greeter("Hello, world ts!");
     
-document.body.innerHTML = greeter.greet();
+//document.body.innerHTML = greeter.greet();

@@ -11,10 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104094524) do
+ActiveRecord::Schema.define(version: 20160113175204) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "armies", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "rooms", force: :cascade do |t|
     t.string   "name"
@@ -30,6 +36,7 @@ ActiveRecord::Schema.define(version: 20160104094524) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "army_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -39,6 +46,16 @@ ActiveRecord::Schema.define(version: 20160104094524) do
     t.integer  "room_id"
     t.datetime "alive_until"
   end
+
+  create_table "troops", id: false, force: :cascade do |t|
+    t.integer "unit_id"
+    t.integer "roster_id"
+    t.integer "unit_size"
+    t.integer "total_price"
+  end
+
+  add_index "troops", ["roster_id"], name: "index_troops_on_roster_id", using: :btree
+  add_index "troops", ["unit_id"], name: "index_troops_on_unit_id", using: :btree
 
   create_table "units", force: :cascade do |t|
     t.string   "name"
@@ -54,6 +71,7 @@ ActiveRecord::Schema.define(version: 20160104094524) do
     t.integer  "shooting_range"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "army_id"
   end
 
 end

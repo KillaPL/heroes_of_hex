@@ -8,7 +8,8 @@ gem 'active_model_serializers'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'puma'
 gem 'foreman'
-gem 'typescript-rails'
+gem 'react-rails', '~> 1.0'
+
 
 group :development do
   gem 'pry'

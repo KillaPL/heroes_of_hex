@@ -34,5 +34,7 @@ module HeroesOfHex
     #     'Access-Control-Allow-Origin' => '*',
     #     'Access-Control-Request-Method' => %w{GET POST OPTIONS}.join(",")
     #   }
-  end
+
+
+   end
 end
