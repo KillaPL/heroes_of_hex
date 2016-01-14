@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
-  resources :sessions, only: [:create, :update]
+  devise_for :users
+ devise_scope :user do
+    get '/users/sign_out' => 'devise/sessions#destroy'
+  end
+ devise_scope :user do
+    post '/sessions/user' => 'devise/sessions#create'
+  end
+
+
+  resources :sessions
 
   resources :rosters, only: [:create, :index, :destroy, :update, :show, :new]
 

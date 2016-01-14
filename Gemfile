@@ -9,6 +9,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'puma'
 gem 'foreman'
 gem 'react-rails', '~> 1.0'
+gem 'devise'
 
 
 group :development do
