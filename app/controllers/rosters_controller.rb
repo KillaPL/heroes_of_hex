@@ -42,7 +42,7 @@ end
   end  
 
  def destroy
-    @roster = Roster.find params[:id]
+    @roster = Roster.find_by(id: params[:id])
     @roster.destroy
     redirect_to :action => 'index'
   end  

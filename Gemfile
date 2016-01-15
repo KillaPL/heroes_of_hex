@@ -10,7 +10,7 @@ gem 'puma'
 gem 'foreman'
 gem 'react-rails', '~> 1.0'
 gem 'devise'
-
+gem 'jquery-rails'
 
 group :development do
   gem 'pry'

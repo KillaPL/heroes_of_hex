@@ -4,6 +4,7 @@
 <table>
   <tr>
     <th>Name</th>
+    <th>Army</th>
     <th>Points limit</th>
     <th></th>
   </tr>
@@ -11,8 +12,9 @@
 <% @rosters.each do |roster| %>
   <tr>
     <td><%= link_to roster.name, :action => 'show', :id => roster.id %></td>
+    <td><%= roster.army.name %></td>    
     <td><%= roster.points_limit %></td>
-    <td><%= link_to 'Destroy', {:action => 'destroy', :id => roster.id}, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', roster_path(roster, :destroy =>true), :confirm =>'Are you sure?', :method => :delete %></td>    
   </tr>
 <% end %>
 </table>
